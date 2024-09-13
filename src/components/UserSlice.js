@@ -1,18 +1,21 @@
-import { getUserNameFromLocalStorage } from "../utils/userUtils";
+// import { getUserNameFromLocalStorage } from "../utils/userUtils";
 import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    name: getUserNameFromLocalStorage(),
-  },
+  // initialState: {
+  //   name: getUserNameFromLocalStorage(),
+  // },
+  initialState: null,
   reducers: {
     setUser: (state, action) => {
-        console.log("setting user");
-      state.name = action.payload;
+      console.log("setting user");
+      // state.name = action.payload;
+      return action.payload;
     },
     removeUser: (state) => {
-      state.name = "";
+      // state.name = "";
+      return null;
     },
   },
 });

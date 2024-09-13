@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "./UserSlice";
 import { Opacity } from "@mui/icons-material";
+import checkValidData from "../utils/validate";
+import { useRef } from "react";
 
 const style = {
   position: "absolute",
@@ -30,8 +32,10 @@ const LoginModal = ({ setShowLoginModal }) => {
   //   <Body />
   // }
 
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const name = useRef(null);
   // console.log(emailId);
   // console.log(signInPassword);
 
@@ -40,6 +44,12 @@ const LoginModal = ({ setShowLoginModal }) => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
+  };
+  const handleClickButton = () => {
+    //validate the data of the form
+    const message = checkValidData(email, signInPassword);
+    console.log(message);
+    setErrorMessage(message);
   };
 
   return (
@@ -65,6 +75,7 @@ const LoginModal = ({ setShowLoginModal }) => {
                 Enter your Name
               </h4>
               <input
+                ref={name}
                 type="text"
                 className="my-4 mx-5 px-[75px] py-[11px] bg-white text-black font-bold border-b-white rounded-lg"
                 name="name"
@@ -82,9 +93,9 @@ const LoginModal = ({ setShowLoginModal }) => {
               className="my-4 mx-5 px-[78px] py-[11px] bg-white text-black font-bold border-b-white rounded-lg"
               name="email"
               placeholder="Email or phone number"
-              value={name}
+              value={email}
               onChange={(e) => {
-                setName(e.target.value);
+                setEmail(e.target.value);
               }}
             />
             <h4 className="text-[22px] text-white font-semibold mt-1 text-center">
@@ -106,18 +117,19 @@ const LoginModal = ({ setShowLoginModal }) => {
                 localStorage.setItem(
                   "user",
                   JSON.stringify({
-                    name: name,
+                    name: email,
                     password: signInPassword,
                   })
                 );
-                dispatch(setUser(name));
-                // handleHomePage()
+                dispatch(setUser(email));
+                handleClickButton();
 
                 //set user state here
               }}
             >
               {isSignInForm ? "Sign in" : "Sign Up"}
             </button>
+            <p className="text-red-600">{errorMessage}</p>
             <h3 className="underline text-white font-bold text-right cursor-pointer hover:text-xl">
               Forgot Password
             </h3>
