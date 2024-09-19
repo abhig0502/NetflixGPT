@@ -25,6 +25,13 @@
 -Implement Sign in user Api
 -Created out Store with userSlice
 
+-will update the profile but why as we have added the user to the store it should automatically got updated (do we need to update the state also for the backend?)
+-BugFix: if the user is not logged in Redirect /browse to login page or vice-versa
+
+question why are we unsubscribing the onauthstatechanged (20:07)
+-added hardcoded values to the constants file
+-Registerd TMDB API and create an app and get access token
+-get data from TMDB now playing movies list API
 
 # app.js
  - created router configrations

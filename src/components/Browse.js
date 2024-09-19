@@ -3,29 +3,32 @@ import Header from "./Header";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import useNowPlayingMovies from "../Hooks/useNowPlayingMovies";
 import { useSelector } from "react-redux";
-
+import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
   const navigate = useNavigate();
   const search = useRef(null);
   const user = useSelector((Store) => Store.user);
-  const {displayName}=user;
-  console.log(user);
+  // const {displayName}=user;      //getting my user here
+  // console.log(user);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        navigate("/");
       })
       .catch((error) => {
         // An error happened.
         navigate("/error");
       });
   };
+
+  useNowPlayingMovies();
   return (
     <div>
-      <div className="flex  bg-gradient-to-b from-black to-white">
+      <div className="flex  bg-gradient-to-b from-black to-black">
         <Header />
         <div className="my-2 flex justify-between">
           <ul className="flex ">
@@ -55,7 +58,7 @@ const Browse = () => {
 
           <div className="ml-[250px] flex">
             <div className="m-auto flex">
-            <p>{displayName}</p>
+              {/* <p>{displayName}</p> ..displaying the name of the user here */}
               <img
                 className="w-[50px] h-[54px]"
                 alt="login-logo"
@@ -73,7 +76,20 @@ const Browse = () => {
           </div>
         </div>
       </div>
-      Browse
+      {/* Browse */}
+      {/*
+        MainContainer
+          - Video Container
+          - Video Title
+        Secondary Container
+          -Movie List * n
+          -cards * n
+       */}
+       <MainContainer />
+       <SecondaryContainer />
+
+
+
     </div>
   );
 };
